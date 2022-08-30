@@ -55,3 +55,14 @@ spec:
     backendRefs:
     - name: infra-backend-v2
       port: 8080
+  # Matches "xxxcolor: blue" OR "xxxcolor: green"
+  - matches:
+    - headers:
+      - name: xxxcolor
+        value: blue
+    - headers:
+      - name: xxxcolor
+        value: green
+    backendRefs:
+    - name: infra-backend-v1
+      port: 8080

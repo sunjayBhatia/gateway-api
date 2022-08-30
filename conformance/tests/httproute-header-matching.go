@@ -53,6 +53,10 @@ var HTTPRouteHeaderMatching = suite.ConformanceTest{
 			Backend:   "infra-backend-v1",
 			Namespace: ns,
 		}, {
+			Request:   http.Request{Path: "/", Headers: map[string]string{"Version": "two", "Xxxcolor": "blue"}},
+			Backend:   "infra-backend-v1",
+			Namespace: ns,
+		}, {
 			Request:    http.Request{Path: "/", Headers: map[string]string{"Color": "orange"}},
 			StatusCode: 404,
 		}, {
