@@ -268,6 +268,23 @@ const (
 	RouteReasonBackendNotFound RouteConditionReason = "BackendNotFound"
 )
 
+// PolicyGroupKind indicates the group and kind of a Policy resource.
+type PolicyGroupKind struct {
+	// Group is the group of the Policy.
+	Group Group `json:"group,omitempty"`
+
+	// Kind is the kind of the Route.
+	Kind Kind `json:"kind"`
+}
+
+type RouteEffectivePolicyConfiguration struct {
+	PolicyType PolicyGroupKind `json:"policyType"`
+
+	SectionName SectionName `json:"sectionName"`
+
+	PolicyValue string `json:"policyValue"`
+}
+
 // RouteParentStatus describes the status of a route with respect to an
 // associated Parent.
 type RouteParentStatus struct {
@@ -315,6 +332,8 @@ type RouteParentStatus struct {
 	// +kubebuilder:validation:MinItems=1
 	// +kubebuilder:validation:MaxItems=8
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
+
+	EffectivePolicyConfigurations []RouteEffectivePolicyConfiguration `json:"effectivePolicyConfigurations"`
 }
 
 // RouteStatus defines the common attributes that all Routes MUST include within
