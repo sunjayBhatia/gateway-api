@@ -259,6 +259,23 @@ const (
 	RouteReasonBackendNotFound RouteConditionReason = "BackendNotFound"
 )
 
+// PolicyGroupKind indicates the group and kind of a Policy resource.
+type PolicyGroupKind struct {
+	// Group is the group of the Policy.
+	Group Group `json:"group,omitempty"`
+
+	// Kind is the kind of the Route.
+	Kind Kind `json:"kind"`
+}
+
+type RouteEffectivePolicyConfiguration struct {
+	PolicyType PolicyGroupKind `json:"policyType"`
+
+	SectionName SectionName `json:"sectionName"`
+
+	PolicyValue string `json:"policyValue"`
+}
+
 // RouteParentStatus describes the status of a route with respect to an
 // associated Parent.
 type RouteParentStatus struct {
@@ -306,6 +323,12 @@ type RouteParentStatus struct {
 	// +kubebuilder:validation:MinItems=1
 	// +kubebuilder:validation:MaxItems=8
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
+
+	// EffectivePolicyConfigurations is a list of policies in effect on this
+	// Route.
+	//
+	// +optional
+	EffectivePolicyConfigurations []RouteEffectivePolicyConfiguration `json:"effectivePolicyConfigurations"`
 }
 
 // RouteStatus defines the common attributes that all Routes MUST include within
@@ -333,9 +356,9 @@ type RouteStatus struct {
 // Hostname is the fully qualified domain name of a network host. This matches
 // the RFC 1123 definition of a hostname with 2 notable exceptions:
 //
-// 1. IPs are not allowed.
-// 2. A hostname may be prefixed with a wildcard label (`*.`). The wildcard
-//    label must appear by itself as the first label.
+//  1. IPs are not allowed.
+//  2. A hostname may be prefixed with a wildcard label (`*.`). The wildcard
+//     label must appear by itself as the first label.
 //
 // Hostname can be "precise" which is a domain name without the terminating
 // dot of a network host (e.g. "foo.example.com") or "wildcard", which is a
