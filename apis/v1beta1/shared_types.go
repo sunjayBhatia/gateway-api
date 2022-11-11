@@ -259,12 +259,22 @@ const (
 	RouteReasonBackendNotFound RouteConditionReason = "BackendNotFound"
 )
 
+type PolicySetting struct {
+	Field string `json:"field"`
+
+	Value string `json:"value"`
+
+	PolicyName string `json:"policyName"`
+}
+
 type RouteEffectivePolicyConfiguration struct {
 	PolicyType string `json:"policyType"`
 
 	SectionName SectionName `json:"sectionName"`
 
-	PolicyValue string `json:"policyValue"`
+	// +listType=map
+	// +listMapKey=field
+	PolicySettings []PolicySetting `json:"policySettings"`
 }
 
 // RouteParentStatus describes the status of a route with respect to an

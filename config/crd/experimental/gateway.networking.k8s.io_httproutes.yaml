@@ -3125,9 +3125,25 @@ spec:
                         in effect on this Route.
                       items:
                         properties:
+                          policySettings:
+                            items:
+                              properties:
+                                field:
+                                  type: string
+                                policyName:
+                                  type: string
+                                value:
+                                  type: string
+                              required:
+                              - field
+                              - policyName
+                              - value
+                              type: object
+                            type: array
+                            x-kubernetes-list-map-keys:
+                            - field
+                            x-kubernetes-list-type: map
                           policyType:
-                            type: string
-                          policyValue:
                             type: string
                           sectionName:
                             description: "SectionName is the name of a section in
@@ -3141,8 +3157,8 @@ spec:
                             pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
                             type: string
                         required:
+                        - policySettings
                         - policyType
-                        - policyValue
                         - sectionName
                         type: object
                       type: array
