@@ -259,17 +259,8 @@ const (
 	RouteReasonBackendNotFound RouteConditionReason = "BackendNotFound"
 )
 
-// PolicyGroupKind indicates the group and kind of a Policy resource.
-type PolicyGroupKind struct {
-	// Group is the group of the Policy.
-	Group Group `json:"group,omitempty"`
-
-	// Kind is the kind of the Route.
-	Kind Kind `json:"kind"`
-}
-
 type RouteEffectivePolicyConfiguration struct {
-	PolicyType PolicyGroupKind `json:"policyType"`
+	PolicyType string `json:"policyType"`
 
 	SectionName SectionName `json:"sectionName"`
 
@@ -328,6 +319,8 @@ type RouteParentStatus struct {
 	// Route.
 	//
 	// +optional
+	// +listType=map
+	// +listMapKey=policyType
 	EffectivePolicyConfigurations []RouteEffectivePolicyConfiguration `json:"effectivePolicyConfigurations"`
 }
 
